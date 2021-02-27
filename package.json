@@ -1,0 +1,28 @@
+{
+  "name": "puppeteer-server",
+  "version": "1.0.0",
+  "description": "puppeteer-server",
+  "main": "server.js",
+  "dependencies": {
+    "request": "^2.88.2",
+    "request-promise-native": "^1.0.9"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node tests/test.js",
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jiangwu10057/puppeteer-server.git"
+  },
+  "keywords": [
+    "puppeteer"
+  ],
+  "author": "jiangwu10057",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jiangwu10057/puppeteer-server/issues"
+  },
+  "homepage": "https://github.com/jiangwu10057/puppeteer-server#readme"
+}

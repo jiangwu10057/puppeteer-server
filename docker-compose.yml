@@ -1,0 +1,19 @@
+version: '3.7'
+networks:
+  component_net:
+    driver: bridge
+    external: true
+services:
+  puppeteer:
+    build: .
+    image: component/puppeteer
+    container_name: puppeteer-chrome-linux
+    restart: always
+    networks:
+      - component_net
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - .:/app
+    ports: 
+      - 9222:9222
