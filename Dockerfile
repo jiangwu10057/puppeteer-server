@@ -2,7 +2,7 @@
 FROM node:12-slim
 
 # 国内访问不了https://dl-ssl.google.com/linux/linux_signing_key.pub，因此备份到可用到机器上https://www.taoerqu.com/linux_signing_key.pub
-RUN apt-get update && apt-get install -y wget gnupg \
+RUN apt-get clean && apt-get update --fix-missing && apt-get install -y wget gnupg \
     && wget -O linux_signing_key.pub https://www.taoerqu.com/linux_signing_key.pub \
     && apt-key add linux_signing_key.pub \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
@@ -28,7 +28,7 @@ RUN apt-get update \
 # ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
 
 # Install puppeteer so it's available in the container.
-RUN npm i puppeteer \
+RUN npm i puppeteer-core \
     # Add user so we don't need --no-sandbox.
     # same layer as npm install to keep re-chowned files from using up several hundred MBs more space
     && groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
@@ -41,4 +41,4 @@ USER pptruser
 
 WORKDIR /app
 
-CMD ["npm", "start"]
+ENTRYPOINT ["npm", "run", "start"]

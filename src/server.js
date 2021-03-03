@@ -1,4 +1,5 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
+const findChrome = require('./find_chrome')
 
 const Server = function (port, maxRequestNumber) {
     const defaultArgs = [
@@ -32,7 +33,10 @@ const Server = function (port, maxRequestNumber) {
         args = this.args || defaultArgs;
         args.push('--remote-debugging-port=' + this.port)
 
+        const findChromePath = await findChrome({})
+        const executablePath = findChromePath.executablePath;
         this.browser = await puppeteer.launch({
+            executablePath,
             args: args || defaultArgs,
         });
 
@@ -41,16 +45,11 @@ const Server = function (port, maxRequestNumber) {
         //当目标被创建时被触发，例如当通过 window.open 或 browser.newPage 打开一个新的页面。
         //每次goto会调用两次
         this.browser.on('targetcreated', (target) => {
-            console.log('targetcreated')
-            // console.log(this.browser.targets().length)
             this.historyCreatedPageNumber++
             this.openingPageNumber++
-            console.log(this.historyCreatedPageNumber)
         })
         //当目标被销毁时被触发，例如当一个页面被关闭时。
         this.browser.on('targetdestroyed', (target) => {
-            console.log('targetdestroyed')
-            console.log(this.browser.targets().length)
             this.openingPageNumber --
             this.whetherRestart()
         })
@@ -59,14 +58,11 @@ const Server = function (port, maxRequestNumber) {
         // Chromium 关闭或崩溃
         // 调用browser.disconnect 方法
         this.browser.on('disconnected', (target) => {
-            console.log('disconnected')
-            // console.log(this.browser.targets().length)
             this.restart()
         })
         //url改变
         this.browser.on('targetchanged', (target) => {
             console.log('targetchanged')
-            // console.log(this.browser.targets().length)
         })
     }
 
@@ -75,6 +71,7 @@ const Server = function (port, maxRequestNumber) {
             this.restart()
         }
     }
+
     this.restart = function () {
         /**
          * 有可能出现，一直都有请求导致没办法重启的情况发生
@@ -83,15 +80,27 @@ const Server = function (port, maxRequestNumber) {
         if(this.isStarting || this.openingPageNumber > 0){
            return
         }
-        console.log('restart')
-        console.log(this.historyCreatedPageNumber)
         this.browser.close()
         this.isStarting = true;
         this.historyCreatedPageNumber = 0
         this.start()
     }
+
+    this.exit = function(){
+        if(!this.browser){
+            return 
+        }
+        this.browser.close()
+        this.browser = undefined;
+    }
 }
 
-// export default Server
+const server = new Server()
 
-new Server().start()
+// 退出时结束浏览器，防止内存泄漏
+process.on('exit', () => {
+    server.exit()
+})
+  
+
+server.start()
