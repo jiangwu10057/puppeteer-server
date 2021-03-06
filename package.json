@@ -7,6 +7,7 @@
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
     "koa-router": "^10.0.0",
+    "koa2-cors": "^2.0.6",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9"
   },
