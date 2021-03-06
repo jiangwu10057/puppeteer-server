@@ -1,15 +1,38 @@
+const Koa = require('koa')
+const koaBody = require('koa-body')
+const router = require('koa-router')()
+
 const puppeteer = require('puppeteer-core');
 let request = require('request-promise-native');
 
-//使用 puppeteer.connect 连接一个已经存在的 Chrome 实例
-// 目前测试时间3～5秒
-(async () => {
-    //通过 9222 端口的 http 接口获取对应的 websocketUrl
+router.get('/pdf/create/download', async (ctx, next) => {
+    const { url, name } = ctx.request.query
+    const pdfBuffer = await createPdfBuffer(decodeURIComponent(url))
+    let filename = decodeURIComponent(name)
+    
+    ctx.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment;filename="${name}.pdf"`,
+        'Content-Length': `${pdfBuffer.length}`
+    })
+    ctx.body = pdfBuffer
+})
+
+const app = new Koa()
+app.use(koaBody())
+app.use(router.routes())
+
+app.listen(80, () => {
+    console.log(`server is started at 80`)
+})
+
+async function createPdfBuffer(url)
+{
     let version = await request({
         uri: "http://127.0.0.1:9222/json/version",
         json: true
     });
-    //直接连接已经存在的 Chrome
+
     let browser = await puppeteer.connect({
         browserWSEndpoint: version.webSocketDebuggerUrl
     });
@@ -17,20 +40,13 @@ let request = require('request-promise-native');
     const page = await browser.newPage();
     await page.emulateMediaType('screen')
     await page.setCacheEnabled(false)
-    // await page.setViewport({
-    //     width: 800,
-    //     height: 1000,
-    //     deviceScaleFactor: 1,
-    // });
-    await page.goto('http://www.baidu.com', {
+    await page.goto(url, {
         waitUntil: 'networkidle2',
     })
-
-    let title = await page.title()
-
-    let path = new Date().getTime() + ".pdf"
-    await page.pdf({
-        path: path, 
+    
+    const title = await page.title()
+    
+    const pdf = await page.pdf({
         displayHeaderFooter: true,
         format: 'A4',
         headerTemplate: '<div style="width:80%;font-size:8px;display: flex; justify-content: center;"><span>'+title+'</span></div>',
@@ -44,6 +60,8 @@ let request = require('request-promise-native');
         }
     });
     await page.close();
-
+    
     await browser.disconnect();
-})();
+
+    return pdf;
+}

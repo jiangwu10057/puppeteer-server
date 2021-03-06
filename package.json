@@ -4,13 +4,16 @@
   "description": "puppeteer-server",
   "main": "server.js",
   "dependencies": {
+    "koa": "^2.13.1",
+    "koa-body": "^4.2.0",
+    "koa-router": "^10.0.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "node tests/test.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "http": "node src/http.js"
   },
   "repository": {
     "type": "git",

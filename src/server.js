@@ -97,10 +97,10 @@ const Server = function (port, maxRequestNumber) {
 
 const server = new Server()
 
-// 退出时结束浏览器，防止内存泄漏
-process.on('exit', () => {
-    server.exit()
-})
+// // 退出时结束浏览器，防止内存泄漏
+// process.on('exit', () => {
+//     server.exit()
+// })
   
 
 server.start()
