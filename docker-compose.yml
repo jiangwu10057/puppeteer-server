@@ -9,7 +9,6 @@ services:
     image: component/puppeteer
     container_name: puppeteer-chrome-linux
     restart: always
-    privileged: true
     networks:
       - component_net
     cap_add:
