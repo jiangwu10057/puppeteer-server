@@ -41,6 +41,6 @@ USER pptruser
 
 WORKDIR /app
 
-RUN chmod a+rwx -R /app && yarn && npm run start
+RUN yarn && npm run start
 
 ENTRYPOINT ["npm", "run", "http"]
