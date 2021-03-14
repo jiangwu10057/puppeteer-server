@@ -3,9 +3,9 @@ const findChrome = require('./find_chrome')
 
 const Server = function (port, maxRequestNumber) {
     const defaultArgs = [
-        '–no-sandbox',
-        '–no-zygote',
-        '–disable-extensions',
+        '-no-sandbox',
+        '-no-zygote',
+        '-disable-extensions',
         '--disable-gpu',
         '--disable-setuid-sandbox',
         '--disable-dev-shm-usage',
