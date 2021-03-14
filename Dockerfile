@@ -41,4 +41,4 @@ USER pptruser
 
 WORKDIR /app
 
-ENTRYPOINT ["npm", "run", "start"]
+ENTRYPOINT ["/bin/sh", "init.sh"]
