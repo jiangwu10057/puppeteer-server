@@ -9,6 +9,7 @@ services:
     image: component/puppeteer
     container_name: puppeteer-chrome-linux
     restart: always
+    privileged: true
     networks:
       - component_net
     cap_add:
@@ -16,5 +17,4 @@ services:
     volumes:
       - .:/app
     ports: 
-      - 9222:9222
-      - 1980:80
+      - 8888:80
