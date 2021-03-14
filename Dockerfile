@@ -41,6 +41,4 @@ USER pptruser
 
 WORKDIR /app
 
-RUN yarn && npm run start
-
-ENTRYPOINT ["npm", "run", "http"]
+ENTRYPOINT ["npm", "run", "start"]
