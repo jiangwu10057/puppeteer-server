@@ -17,4 +17,4 @@ services:
     volumes:
       - .:/app
     ports: 
-      - 8888:80
+      - 8888:8888
