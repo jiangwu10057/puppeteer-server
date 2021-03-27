@@ -28,14 +28,19 @@ router.get('/pdf/create/download', async (ctx, next) => {
     ctx.body = pdfBuffer
 })
 
+const logger = require('./middleware/logger');
+
 const app = new Koa()
 app.use(koaBody)
 app.use(cors)
+app.use(logger());
 app.use(router.routes())
 
 app.listen(8888, () => {
     console.log(`server is started at 80`)
 })
+
+const logFormat = require('./util/log_format');
 
 async function createPdfBuffer(url) {
     let version = await request({
@@ -50,6 +55,21 @@ async function createPdfBuffer(url) {
     const page = await browser.newPage();
     await page.emulateMediaType('screen')
     await page.setCacheEnabled(false)
+    page.on('console', msg => {
+        for (let i = 0; i < msg.args().length; ++i)
+          console.log(`${i}: ${msg.args()[i]}`);
+      });
+
+      page.on('error', msg => {
+        logFormat.page(msg); 
+      });
+      page.on('pageerror', msg => {
+        logFormat.page(msg); 
+      });
+      page.on('request', msg => {
+        // logFormat.page(msg); 
+        //   console.log(msg)
+      });
     await page.goto(url, {
         waitUntil: 'networkidle2',
     })

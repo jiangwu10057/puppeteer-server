@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer-core');
-const findChrome = require('./find_chrome')
+const findChrome = require('./util/find_chrome')
 
 const Server = function (port, maxRequestNumber) {
     const defaultArgs = [
