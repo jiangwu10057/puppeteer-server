@@ -66,6 +66,12 @@ async function createPdfBuffer(url) {
       page.on('pageerror', msg => {
         logFormat.page(msg); 
       });
+      page.on('requestfailed', msg =>{
+        logFormat.page(msg); 
+      })
+      page.on('requestfinished', msg =>{
+        logFormat.page(msg); 
+      })
       page.on('request', msg => {
         // logFormat.page(msg); 
         //   console.log(msg)
