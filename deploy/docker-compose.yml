@@ -5,7 +5,9 @@ networks:
     external: true
 services:
   puppeteer:
-    build: .
+    build:
+      context: ..
+      dockerfile: ./deploy/Dockerfile
     image: component/puppeteer
     container_name: puppeteer-chrome-linux
     restart: always
@@ -15,6 +17,6 @@ services:
     cap_add:
       - SYS_ADMIN
     volumes:
-      - .:/app
+      - ..:/app
     ports: 
-      - 8888:8888
+      - 8889:8888

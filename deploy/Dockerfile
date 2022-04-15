@@ -11,7 +11,9 @@ RUN apt-get clean && apt-get update --fix-missing && apt-get install -y wget gnu
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
 # installs, work.
 
-RUN apt-get update \
+RUN sed -i 's/deb.debian.org/mirrors.tencent.com/' /etc/apt/sources.list
+
+RUN apt-get update --fix-missing \
     && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
