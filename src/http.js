@@ -37,7 +37,7 @@ app.use(logger());
 app.use(router.routes())
 
 app.listen(8888, () => {
-    console.log(`server is started at 80`)
+    console.log(`server is started at 8888`)
 })
 
 const logFormat = require('./util/log_format');
@@ -86,7 +86,7 @@ async function createPdfBuffer(url) {
         displayHeaderFooter: true,
         format: 'A4',
         headerTemplate: '<div style="width:80%;font-size:8px;display: flex; justify-content: center;"><span>' + title + '</span></div>',
-        footerTemplate: `<div style="width:80%; margin:0 auto;font-size:8px;display:flex; justify-content: space-between; "><span>生成日期:<span class="date"></span></span><div><span class="pageNumber"></span> / <span class="totalPages"></span></div></div>`,
+        footerTemplate: `<div style="width:80%; margin:0 auto;font-size:8px;display:flex; justify-content: space-between; "><span>简历范 生成日期:<span class="date"></span></span><div><span class="pageNumber"></span> / <span class="totalPages"></span></div></div>`,
         scale: 1,
         margin: {
             top: '1.27cm',
