@@ -18,5 +18,3 @@ services:
       - SYS_ADMIN
     volumes:
       - ..:/app
-    ports: 
-      - 8889:8888
