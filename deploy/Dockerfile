@@ -43,4 +43,5 @@ USER pptruser
 
 WORKDIR /app
 
+EXPOSE 8888
 ENTRYPOINT ["/bin/sh", "init.sh"]
