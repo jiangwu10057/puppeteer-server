@@ -80,6 +80,8 @@ async function createPdfBuffer(url) {
         waitUntil: 'networkidle2',
     })
 
+    await page.content();
+
     const title = await page.title()
 
     const pdf = await page.pdf({
