@@ -1,4 +1,4 @@
 #!/bin/bash
 yarn
 nohup npm run start &
-nohup npm run http &
+nohup npm run http
