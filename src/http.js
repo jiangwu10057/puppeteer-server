@@ -74,13 +74,13 @@ async function createPdfBuffer(url) {
       })
       page.on('request', msg => {
         // logFormat.page(msg); 
-        //   console.log(msg)
+          // console.log(msg)
       });
     await page.goto(url, {
         waitUntil: 'networkidle2',
     })
 
-    await page.content();
+    await page.waitForFunction('window.allDone', { timeout: 1000 })
 
     const title = await page.title()
 
