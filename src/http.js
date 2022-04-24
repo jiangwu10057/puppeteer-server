@@ -18,7 +18,7 @@ let request = require('request-promise-native');
 router.get('/pdf/create/download', async (ctx, next) => {
     const { url, name } = ctx.request.query
     const pdfBuffer = await createPdfBuffer(decodeURIComponent(url))
-    let filename = decodeURIComponent(name)
+    let filename = name
 
     ctx.set({
         'Content-Type': 'application/pdf',
