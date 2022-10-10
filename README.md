@@ -25,5 +25,8 @@ npm run start
 - https://github.com/chromedp/chromedp
 - https://github.com/go-rod/rod
 
+## 参考项目
+- https://github.com/yiGmMk/go-pdf
+
 # 无头浏览器
 docker run -d -p 9222:9222 --rm --name headless-shell --shm-size 2G chromedp/headless-shell

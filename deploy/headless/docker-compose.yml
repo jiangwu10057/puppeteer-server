@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  chrome:
+    build: .
+    image: chrome
+    container_name: chrome
+    command: --shm-size 2G
+    restart: always
+    ports:
+      - 9222:9222
+    
