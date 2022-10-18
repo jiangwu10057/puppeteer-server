@@ -30,3 +30,6 @@ npm run start
 
 # 无头浏览器
 docker run -d -p 9222:9222 --rm --name headless-shell --shm-size 2G chromedp/headless-shell
+
+# 文件格式转换
+- https://cloudconvert.com/xls-to-xlsx 免费一天25个文件
