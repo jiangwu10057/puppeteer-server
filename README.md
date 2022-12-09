@@ -33,3 +33,7 @@ docker run -d -p 9222:9222 --rm --name headless-shell --shm-size 2G chromedp/hea
 
 # 文件格式转换
 - https://cloudconvert.com/xls-to-xlsx 免费一天25个文件
+
+# 测试性能
+- puppeteer-server 初始内存111.9MB 保存https://bot.sannysoft.com/ 内存117MB CPU70%
+- chrome-headless 初始内存43.8MB 保存https://bot.sannysoft.com/ 内存178MB CPU40%  持续增高

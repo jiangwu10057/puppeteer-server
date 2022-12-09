@@ -1,11 +1,12 @@
 # https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#running-puppeteer-in-docker
-FROM node:12-slim
+FROM node:14-slim
 
 # 国内访问不了https://dl-ssl.google.com/linux/linux_signing_key.pub，因此备份到可用到机器上https://www.taoerqu.com/linux_signing_key.pub
 RUN apt-get clean && apt-get update --fix-missing && apt-get install -y wget gnupg \
     && wget -O linux_signing_key.pub https://www.taoerqu.com/linux_signing_key.pub \
     && apt-key add linux_signing_key.pub \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \ 
+    && sh -c 'echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/sources.list.d/stretch-backports.list'
 
 # Install latest chrome dev package and fonts to support major charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version of Chromium that Puppeteer
@@ -14,7 +15,8 @@ RUN apt-get clean && apt-get update --fix-missing && apt-get install -y wget gnu
 RUN sed -i 's/deb.debian.org/mirrors.tencent.com/' /etc/apt/sources.list
 
 RUN apt-get update --fix-missing \
-    && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
+    && apt-get install -y -t stretch-backports libgbm1 \
+    && apt-get install -y  google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
       --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
