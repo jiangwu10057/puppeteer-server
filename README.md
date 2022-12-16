@@ -29,7 +29,8 @@ npm run start
 - https://github.com/yiGmMk/go-pdf
 
 # 无头浏览器
-docker run -d -p 9222:9222 --rm --name headless-shell --shm-size 2G chromedp/headless-shell
+- docker run -d -p 9222:9222 --rm --name headless-shell --shm-size 2G chromedp/headless-shell
+- docker run -d -p 9222:9222 -v log/chromehl:/var/log/chromehl --rm --name crawl-chrome --shm-size 2G --init chromedp/headless-shell --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --disable-gpu --no-sandbox --no-first-run --no-startup-window --process-per-tab --debug-devtools --enable-logging --user-data-dir=/var/log/chromehl 
 
 # 文件格式转换
 - https://cloudconvert.com/xls-to-xlsx 免费一天25个文件
